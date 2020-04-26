@@ -7,12 +7,26 @@ file(GLOB SOURCES "src/*.cpp")
 
 #link_directories(lib)
 
-find_library(SDL2_LIBRARY SDL2)
-find_library(SDL2_image_LIBRARY SDL2_image)
+find_library(sdl2 SDL2)
+find_library(sdl2_image SDL2_image)
 
-if(NOT SDL2_LIBRARY OR NOT SDL2_image_LIBRARY)
+if(APPLE)
+    find_library(opengGL OpenGL)
+endif()
+
+if(NOT sdl2 OR NOT sdl2_image)
     message(FATAL_ERROR "SDL2 or SDL2_image not found")
 endif()
 
+if(APPLE)
+    if(NOT opengGL)
+        message(FATAL_ERROR "OpengGL not found")
+    endif()
+endif()
+
 add_executable(game ${SOURCES})
-target_link_libraries(game ${SDL2_LIBRARY} ${SDL2_image_LIBRARY} GL GLU)
+if(APPLE)
+    target_link_libraries(game ${sdl2} ${sdl2_image} ${opengGL})
+else()
+    target_link_libraries(game ${sdl2} ${sdl2_image} GL GLU)
+endif()

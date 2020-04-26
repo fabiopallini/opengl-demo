@@ -4,7 +4,12 @@ and may not be redistributed without written permission.*/
 //Using SDL, SDL OpenGL, standard IO, and, strings
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
-#include <GL/glu.h>
+#ifdef __linux__
+	#include <GL/glu.h>
+#endif
+#ifdef __APPLE__
+	#include <OpenGL/glu.h>
+#endif
 #include <stdio.h>
 #include <string>
 
