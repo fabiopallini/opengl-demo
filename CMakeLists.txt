@@ -3,7 +3,7 @@ project (game)
 
 #include_directories(include)
 
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/*.c")
 
 #link_directories(lib)
 
@@ -25,6 +25,8 @@ if(APPLE)
 endif()
 
 add_executable(game ${SOURCES})
+target_compile_options(game PRIVATE "-Wno-deprecated")
+
 if(APPLE)
     target_link_libraries(game ${sdl2} ${sdl2_image} ${opengGL})
 else()
