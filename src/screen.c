@@ -2,6 +2,7 @@
 
 GLuint texture_1;
 GLuint texture_2;
+void drawCube();
 
 bool initGL(const int SCREEN_WIDTH, const int SCREEN_HEIGHT)
 {
@@ -11,13 +12,16 @@ bool initGL(const int SCREEN_WIDTH, const int SCREEN_HEIGHT)
     //Initialize Projection Matrix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0, 1.0, -1.0);
+    //glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0, 1.0, -1.0);
+	gluPerspective(45.0, (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 200.0);
+	gluLookAt(0.0, 0.0, 5.0,0.0, 0.0, 0.0,0.0, 1.0, 0.0); 
     //Initialize Modelview Matrix
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
 	glClearColor( 0.f, 0.f, 0.f, 1.f );
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
 
 	error = glGetError();
 	if( error != GL_NO_ERROR )
@@ -35,8 +39,9 @@ bool initGL(const int SCREEN_WIDTH, const int SCREEN_HEIGHT)
 void render(const int SCREEN_WIDTH, const int SCREEN_HEIGHT)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	drawTexture(texture_1, 100, 100, 100, 100);
-	drawTexture(texture_2, 280, 100, 100, 100);
+	//drawTexture(texture_1, 100, 100, 100, 100);
+	//drawTexture(texture_2, 280, 100, 100, 100);
+	drawCube();
 }
 
 GLuint loadTexture(GLuint* pixels, GLuint width, GLuint height){
@@ -109,7 +114,6 @@ GLuint loadMedia(int color){
 }
 
 void drawTexture(GLuint texture, int x, int y, int w, int h){
-	//If the texture exists
     if(texture != 0){
 		glLoadIdentity();
 		glTranslatef(x, y, 0.f);
@@ -122,4 +126,55 @@ void drawTexture(GLuint texture, int x, int y, int w, int h){
             glTexCoord2f(0.f, 1.f); glVertex2f(0.f, 1.f);
         glEnd();
     }
+}
+
+int rot = 0;
+void drawCube(){
+	glLoadIdentity();
+	glTranslatef(-0.5f, -0.5f, 0.f);
+	glScalef(1, 1, 1.f);
+	rot++;
+	glRotatef(rot, rot, rot, 0);
+
+	if(texture_1 == 0)
+		return;
+	glBindTexture(GL_TEXTURE_2D, texture_1);
+	glBegin(GL_QUADS);
+		// front
+		//glColor3f(0.0f, 1.0f, 0.0f);
+		glTexCoord2f(0.f, 0.f); glVertex3f(0.0f, 0.0f, 0.0f);
+		glTexCoord2f(1.f, 0.f); glVertex3f(1.0f, 0.0f, 0.0f);
+		glTexCoord2f(1.f, 1.f); glVertex3f(1.0f, 1.0f, 0.0f);
+		glTexCoord2f(0.f, 1.f); glVertex3f(0.0f, 1.0f, 0.0f);
+		// back
+		//glColor3f(0.0f, 1.0f, 0.0f);
+		glTexCoord2f(0.f, 0.f); glVertex3f(0.0f, 0.0f, -1.0f);
+		glTexCoord2f(1.f, 0.f); glVertex3f(1.0f, 0.0f, -1.0f);
+		glTexCoord2f(1.f, 1.f); glVertex3f(1.0f, 1.0f, -1.0f);
+		glTexCoord2f(0.f, 1.f); glVertex3f(0.0f, 1.0f, -1.0f);
+		// right
+		//glColor3f(1.0f, 0.0f, 0.0f);
+		glTexCoord2f(0.f, 0.f); glVertex3f(1.0f, 0.0f, 0.0f);
+		glTexCoord2f(1.f, 0.f); glVertex3f(1.0f, 0.0f, -1.0f);
+		glTexCoord2f(1.f, 1.f); glVertex3f(1.0f, 1.0f, -1.0f);
+		glTexCoord2f(0.f, 1.f); glVertex3f(1.0f, 1.0f, 0.0f);
+		// left
+		//glColor3f(1.0f, 0.0f, 0.0f);
+		glTexCoord2f(0.f, 0.f); glVertex3f(0.0f, 0.0f, 0.0f);
+		glTexCoord2f(1.f, 0.f); glVertex3f(0.0f, 0.0f, -1.0f);
+		glTexCoord2f(1.f, 1.f); glVertex3f(0.0f, 1.0f, -1.0f);
+		glTexCoord2f(0.f, 1.f); glVertex3f(0.0f, 1.0f, 0.0f);
+		// top
+		//glColor3f(0.0f, 0.0f, 1.0f);
+		glTexCoord2f(0.f, 0.f); glVertex3f(0.0f, 1.0f, 0.0f);
+		glTexCoord2f(1.f, 0.f); glVertex3f(1.0f, 1.0f, 0.0f);
+		glTexCoord2f(1.f, 1.f); glVertex3f(1.0f, 1.0f, -1.0f);
+		glTexCoord2f(0.f, 1.f); glVertex3f(0.0f, 1.0f, -1.0f);
+		// bottom
+		//glColor3f(0.0f, 0.0f, 1.0f);
+		glTexCoord2f(0.f, 0.f); glVertex3f(0.0f, 0.0f, 0.0f);
+		glTexCoord2f(1.f, 0.f); glVertex3f(1.0f, 0.0f, 0.0f);
+		glTexCoord2f(1.f, 1.f); glVertex3f(1.0f, 0.0f, -1.0f);
+		glTexCoord2f(0.f, 1.f); glVertex3f(0.0f, 0.0f, -1.0f);
+	glEnd();
 }
