@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2)
-project (game)
+project (demo)
 
 #include_directories(include)
 
@@ -24,11 +24,11 @@ if(APPLE)
     endif()
 endif()
 
-add_executable(game ${SOURCES})
-target_compile_options(game PRIVATE "-Wno-deprecated")
+add_executable(demo ${SOURCES})
+target_compile_options(demo PRIVATE "-Wno-deprecated")
 
 if(APPLE)
-    target_link_libraries(game ${sdl2} ${sdl2_image} ${opengGL})
+    target_link_libraries(demo ${sdl2} ${sdl2_image} ${opengGL})
 else()
-    target_link_libraries(game ${sdl2} ${sdl2_image} GL GLU)
+    target_link_libraries(demo ${sdl2} ${sdl2_image} GL GLU)
 endif()

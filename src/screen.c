@@ -55,7 +55,7 @@ GLuint loadTexture(GLuint* pixels, GLuint width, GLuint height){
     GLenum error = glGetError();
     if(error != GL_NO_ERROR){
         printf( "Error loading texture from %p pixels! %s\n", pixels, gluErrorString( error ) );
-        return NULL;
+        return 0;
     }
 	
     return texture;
