@@ -1,8 +1,8 @@
 #ifdef __linux__
-	#include <GL/glu.h>
+    #include <GL/glu.h>
 #endif
 #ifdef __APPLE__
-	#include <OpenGL/glu.h>
+    #include <OpenGL/glu.h>
 #endif
 
 #include <stdio.h>
