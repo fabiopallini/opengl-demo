@@ -9,6 +9,6 @@
 #include <stdbool.h>
 
 bool initGL(const int SCREEN_WIDTH, const int SCREEN_HEIGHT);
-GLuint loadMedia();
+GLuint loadMedia(int color);
 void drawTexture();
 void render(const int SCREEN_WIDTH, const int SCREEN_HEIGHT);

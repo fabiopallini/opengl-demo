@@ -11,7 +11,7 @@ const int SCREEN_HEIGHT = 480;
 bool init();
 void handleKeys( unsigned char key, int x, int y );
 void update();
-void close();
+void closeProgram();
 
 SDL_Window* gWindow = NULL;
 SDL_GLContext gContext;
@@ -66,7 +66,7 @@ void handleKeys(unsigned char key, int x, int y)
 
 void update(){}
 
-void close()
+void closeProgram()
 {
     SDL_DestroyWindow(gWindow);
     gWindow = NULL;
@@ -102,6 +102,6 @@ int main(int argc, char* args[])
         }
         SDL_StopTextInput();
     }
-    close();
+    closeProgram();
     return 0;
 }
